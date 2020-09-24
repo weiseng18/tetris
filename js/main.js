@@ -21,6 +21,19 @@ Game.prototype.drawBoard = function() {
 	wrapper.appendChild(grid);
 }
 
+// this.y, this.x will point to top left of the cell area in pieces.js
+function Piece(letter) {
+	this.shape = SHAPES[letter];
+	this.color = COLORS[letter];
+	this.rotation = 0;
+
+	// every piece, when rotation=0, has height 2
+	this.y = -2;
+	// center the piece horizontally as far as possible
+	var pieceWidth = this.shape[0][0].length;
+	this.x = game.width/2 - Math.floor(pieceWidth/2);
+}
+
 var game;
 
 window.onload = function() {
