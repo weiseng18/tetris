@@ -1,4 +1,5 @@
 function Game(height, width) {
+	this.id = "grid";
 	this.height = height;
 	this.width = width;
 	this.cellSize = "30px";
@@ -6,6 +7,7 @@ function Game(height, width) {
 
 Game.prototype.drawBoard = function() {
 	var grid = document.createElement("table");
+	grid.id = this.id;
 	grid.className = "grid";
 
 	for (var i=0; i<this.height; i++) {
