@@ -31,6 +31,9 @@ function Piece(letter) {
 	this.color = COLORS[letter];
 	this.rotation = 0;
 
+	// if this is true, piece cannot be moved
+	this.locked = false;
+
 	// every piece, when rotation=0, has height 2
 	this.y = -2;
 	// center the piece horizontally as far as possible
@@ -64,6 +67,21 @@ Piece.prototype.undraw = function() {
 					x = this.x + j;
 				if (0 <= y && y < game.height && 0 <= x && x < game.width)
 					getCell(game.id, y, x).style.backgroundColor = "white";
+			}
+}
+
+Piece.prototype.lock = function() {
+	this.locked = true;
+
+	var height = this.shape[this.rotation].length;
+	var width = this.shape[this.rotation][0].length;
+	for (var i=0; i<height; i++)
+		for (var j=0; j<width; j++)
+			if (this.shape[this.rotation][i][j]) {
+				var y = this.y + i,
+					x = this.x + j;
+				if (0 <= y && y < game.height && 0 <= x && x < game.width)
+					game.grid[y][x] = this.color;
 			}
 }
 
