@@ -3,6 +3,8 @@ function Game(height, width) {
 	this.height = height;
 	this.width = width;
 	this.cellSize = "30px";
+
+	this.grid = init2D(height, width, null);
 }
 
 Game.prototype.drawBoard = function() {
