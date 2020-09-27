@@ -42,6 +42,22 @@ Game.prototype.start = function() {
 	this.newPiece();
 }
 
+Game.prototype.keypress = function() {
+	window.addEventListener("keypress", (e) => {
+		var key = e.key.toLowerCase();
+		if (key == "a")
+			this.activePiece.move(0, -1, 0);
+		else if (key == "d")
+			this.activePiece.move(0, 1, 0);
+		else if (key == "s")
+			this.activePiece.move(1, 0, 0);
+		else if (key == "q")
+			this.activePiece.move(0, 0, -1);
+		else if (key == "e")
+			this.activePiece.move(0, 0, 1);
+	});
+}
+
 // this.y, this.x will point to top left of the cell area in pieces.js
 function Piece(letter) {
 	this.shape = SHAPES[letter];
@@ -173,4 +189,5 @@ var game;
 window.onload = function() {
 	game = new Game(15, 8);
 	game.drawBoard();
+	game.keypress();
 }
