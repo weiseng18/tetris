@@ -7,3 +7,14 @@ function get(id) {
 function getCell(id, x, y) {
 	return document.getElementById(id).children[0].children[x].children[y];
 }
+
+function init2D(height, width, val) {
+	var arr = [];
+	for (var i=0; i<height; i++) {
+		var row = [];
+		for (var j=0; j<width; j++)
+			row.push(val);
+		arr.push(row);
+	}
+	return arr;
+}
