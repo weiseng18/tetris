@@ -31,7 +31,7 @@ function Piece(letter) {
 	this.y = -2;
 	// center the piece horizontally as far as possible
 	var pieceWidth = this.shape[0][0].length;
-	this.x = game.width/2 - Math.floor(pieceWidth/2);
+	this.x = Math.floor(game.width/2) - Math.floor(pieceWidth/2);
 }
 
 var game;
