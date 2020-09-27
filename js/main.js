@@ -144,7 +144,7 @@ Piece.prototype.collision = function(deltaY, deltaX, deltaRotation) {
 					x = this.x + deltaX + j;
 
 				// if out of bounds, collision with bottom/side wall
-				if (y >= game.height || x >= game.width)
+				if (y >= game.height || x < 0 || x >= game.width)
 					return true;
 
 				// if within the bounds, check for collision with pieces
