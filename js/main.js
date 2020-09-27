@@ -190,4 +190,6 @@ window.onload = function() {
 	game = new Game(15, 8);
 	game.drawBoard();
 	game.keypress();
+
+	addButtons();
 }
