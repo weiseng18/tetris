@@ -134,8 +134,8 @@ Piece.prototype.collision = function(deltaY, deltaX, deltaRotation) {
 	var width = this.shape[this.rotation][0].length;
 
 	var rotation = this.rotation + deltaRotation;
-	if (rotation >= 4) rotation -= 4;
-	if (rotation < 0) rotation += 4;
+	if (rotation >= this.shape.length) rotation -= this.shape.length;
+	if (rotation < 0) rotation += this.shape.length;
 
 	for (var i=0; i<height; i++)
 		for (var j=0; j<width; j++)
@@ -177,8 +177,8 @@ Piece.prototype.move = function(deltaY, deltaX, deltaRotation) {
 		this.x += deltaX;
 
 		this.rotation += deltaRotation;
-		if (this.rotation >= 4) this.rotation -= 4;
-		if (this.rotation < 0) this.rotation += 4;
+		if (this.rotation >= this.shape.length) this.rotation -= this.shape.length;
+		if (this.rotation < 0) this.rotation += this.shape.length;
 
 		this.draw();
 	}
