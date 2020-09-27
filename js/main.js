@@ -188,7 +188,7 @@ Piece.prototype.move = function(deltaY, deltaX, deltaRotation) {
 var game;
 
 window.onload = function() {
-	game = new Game(15, 8);
+	game = new Game(15, 9);
 	game.drawBoard();
 	game.keypress();
 
