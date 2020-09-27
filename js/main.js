@@ -4,6 +4,9 @@ function Game(height, width) {
 	this.width = width;
 	this.cellSize = "30px";
 
+	// tick speed set in ms
+	this.tickSpeed = 1000;
+
 	this.grid = init2D(height, width, null);
 
 	this.letters = ["O","I","T","S","Z","J","L"];
@@ -49,6 +52,14 @@ function Piece(letter) {
 	// center the piece horizontally as far as possible
 	var pieceWidth = this.shape[0][0].length;
 	this.x = Math.floor(game.width/2) - Math.floor(pieceWidth/2);
+
+	this.startGravity();
+}
+
+Piece.prototype.startGravity = function() {
+	this.gravity = setInterval(() => {
+		this.move(1, 0, 0);
+	}, game.tickSpeed);
 }
 
 // draw function to draw a piece onto the board
@@ -82,6 +93,7 @@ Piece.prototype.undraw = function() {
 
 Piece.prototype.lock = function() {
 	this.locked = true;
+	clearInterval(this.gravity);
 
 	var height = this.shape[this.rotation].length;
 	var width = this.shape[this.rotation][0].length;
