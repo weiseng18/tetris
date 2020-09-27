@@ -18,3 +18,9 @@ function init2D(height, width, val) {
 	}
 	return arr;
 }
+
+// returns integer in [0, length)
+function randomInt(length) {
+	// Math.random() range is [0,1)
+	return Math.floor(Math.random()*length);
+}
