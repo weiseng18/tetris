@@ -89,7 +89,10 @@ Piece.prototype.collision = function(deltaY, deltaX, deltaRotation) {
 	var height = this.shape[this.rotation].length;
 	var width = this.shape[this.rotation][0].length;
 
-	var rotation = (this.rotation + deltaRotation) % 4;
+	var rotation = this.rotation + deltaRotation;
+	if (rotation >= 4) rotation -= 4;
+	if (rotation < 0) rotation += 4;
+
 	for (var i=0; i<height; i++)
 		for (var j=0; j<width; j++)
 			if (this.shape[rotation][i][j]) {
@@ -128,7 +131,11 @@ Piece.prototype.move = function(deltaY, deltaX, deltaRotation) {
 		this.undraw();
 		this.y += deltaY;
 		this.x += deltaX;
+
 		this.rotation += deltaRotation;
+		if (this.rotation >= 4) this.rotation -= 4;
+		if (this.rotation < 0) this.rotation += 4;
+
 		this.draw();
 	}
 }
