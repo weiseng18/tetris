@@ -5,6 +5,9 @@ function Game(height, width) {
 	this.cellSize = "30px";
 
 	this.grid = init2D(height, width, null);
+
+	this.letters = ["O","I","T","S","Z","J","L"];
+	this.activePiece = null;
 }
 
 Game.prototype.drawBoard = function() {
@@ -23,6 +26,13 @@ Game.prototype.drawBoard = function() {
 
 	var wrapper = get("boardWrapper");
 	wrapper.appendChild(grid);
+}
+
+Game.prototype.newPiece = function() {
+	var idx = randomInt(this.letters.length);
+	var letter = this.letters[idx];
+
+	this.activePiece = new Piece(letter);
 }
 
 // this.y, this.x will point to top left of the cell area in pieces.js
@@ -83,6 +93,8 @@ Piece.prototype.lock = function() {
 				if (0 <= y && y < game.height && 0 <= x && x < game.width)
 					game.grid[y][x] = this.color;
 			}
+
+	game.newPiece();
 }
 
 Piece.prototype.collision = function(deltaY, deltaX, deltaRotation) {
