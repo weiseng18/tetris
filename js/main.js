@@ -6,6 +6,7 @@ function Game(height, width) {
 
 	// tick speed set in ms
 	this.tickSpeed = 1000;
+	this.started = false;
 
 	this.grid = init2D(height, width, null);
 
@@ -107,7 +108,10 @@ Game.prototype.newPiece = function() {
 }
 
 Game.prototype.start = function() {
-	this.newPiece();
+	if (!this.started) {
+		this.started = true;
+		this.newPiece();
+	}
 }
 
 Game.prototype.keypress = function() {
