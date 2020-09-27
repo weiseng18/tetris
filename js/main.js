@@ -38,6 +38,10 @@ Game.prototype.newPiece = function() {
 	this.activePiece = new Piece(letter);
 }
 
+Game.prototype.start = function() {
+	this.newPiece();
+}
+
 // this.y, this.x will point to top left of the cell area in pieces.js
 function Piece(letter) {
 	this.shape = SHAPES[letter];
