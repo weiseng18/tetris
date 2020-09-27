@@ -85,6 +85,54 @@ Piece.prototype.lock = function() {
 			}
 }
 
+Piece.prototype.collision = function(deltaY, deltaX, deltaRotation) {
+	var height = this.shape[this.rotation].length;
+	var width = this.shape[this.rotation][0].length;
+
+	var rotation = (this.rotation + deltaRotation) % 4;
+	for (var i=0; i<height; i++)
+		for (var j=0; j<width; j++)
+			if (this.shape[rotation][i][j]) {
+				var y = this.y + deltaY + i,
+					x = this.x + deltaX + j;
+
+				// if out of bounds, collision with bottom/side wall
+				if (y >= game.height || x >= game.width)
+					return true;
+
+				// if within the bounds, check for collision with pieces
+				if (0 <= y && y < game.height && 0 <= x && x < game.width)
+					if (game.grid[y][x] != null)
+						return true;
+			}
+	return false;
+}
+
+Piece.prototype.move = function(deltaY, deltaX, deltaRotation) {
+	if (this.locked == true)
+		return;
+
+	// handle moving down separately
+	// to check if the piece should be locked
+	if (deltaY == 1 && deltaX == 0 && deltaRotation == 0) {
+		if (!this.collision(1, 0, 0)) {
+			this.undraw();
+			this.y++;
+			this.draw();
+		}
+		else
+			this.lock();
+	}
+
+	else if (!this.collision(deltaY, deltaX, deltaRotation)) {
+		this.undraw();
+		this.y += deltaY;
+		this.x += deltaX;
+		this.rotation += deltaRotation;
+		this.draw();
+	}
+}
+
 var game;
 
 window.onload = function() {
