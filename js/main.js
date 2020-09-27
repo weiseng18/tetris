@@ -36,6 +36,35 @@ function Piece(letter) {
 	this.x = Math.floor(game.width/2) - Math.floor(pieceWidth/2);
 }
 
+// draw function to draw a piece onto the board
+Piece.prototype.draw = function() {
+	var height = this.shape[this.rotation].length;
+	var width = this.shape[this.rotation][0].length;
+	for (var i=0; i<height; i++)
+		for (var j=0; j<width; j++)
+			if (this.shape[this.rotation][i][j]) {
+				var y = this.y + i,
+					x = this.x + j;
+				if (0 <= y && y < game.height && 0 <= x && x < game.width)
+					getCell(game.id, y, x).style.backgroundColor = this.color;
+			}
+}
+
+// undraw function to remove a piece from the board
+// this will occur before any sort of movement to a piece
+Piece.prototype.undraw = function() {
+	var height = this.shape[this.rotation].length;
+	var width = this.shape[this.rotation][0].length;
+	for (var i=0; i<height; i++)
+		for (var j=0; j<width; j++)
+			if (this.shape[this.rotation][i][j]) {
+				var y = this.y + i,
+					x = this.x + j;
+				if (0 <= y && y < game.height && 0 <= x && x < game.width)
+					getCell(game.id, y, x).style.backgroundColor = "white";
+			}
+}
+
 var game;
 
 window.onload = function() {
