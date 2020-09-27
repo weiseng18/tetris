@@ -31,6 +31,74 @@ Game.prototype.drawBoard = function() {
 	wrapper.appendChild(grid);
 }
 
+Game.prototype.drawLocked = function() {
+	for (var i=0; i<this.height; i++)
+		for (var j=0; j<this.width; j++)
+			if (this.grid[i][j] != null)
+				getCell(this.id, i, j).style.backgroundColor = this.grid[i][j];
+}
+
+Game.prototype.undrawLocked = function() {
+	for (var i=0; i<this.height; i++)
+		for (var j=0; j<this.width; j++)
+			if (this.grid[i][j] != null)
+				getCell(this.id, i, j).style.backgroundColor = "white";
+}
+
+Game.prototype.checkFullRow = function() {
+	var rowsToDelete = [];
+
+	for (var i=0; i<this.height; i++) {
+		var isFull = true;
+		for (var j=0; j<this.width; j++)
+			if (this.grid[i][j] == null) {
+				isFull = false;
+				break;
+			}
+		if (isFull)
+			rowsToDelete.push(i);
+	}
+
+	var total = rowsToDelete.length;
+
+	if (total > 0) {
+
+		// paint white
+		for (var i=total-1; i>=0; i--) {
+			// undraw
+			this.undrawLocked();
+
+			// paint white
+			var indexToDelete = rowsToDelete[i];
+			for (var a=0; a<this.width; a++)
+				this.grid[indexToDelete][a] = null;
+
+			// redraw
+			this.drawLocked();
+		}
+
+		// remove rows
+		var rowsDeleted = 0;
+
+		setTimeout(() => {
+			// remove
+			for (var i=total-1; i>=0; i--) {
+				// undraw
+				this.undrawLocked();
+
+				var indexToDelete = rowsToDelete[i] + rowsDeleted;
+				// remove
+				this.grid.splice(indexToDelete, 1);
+				rowsDeleted++;
+				this.grid.unshift([]);
+
+				// redraw
+				this.drawLocked();
+			}
+		}, 0.1*this.tickSpeed);
+	}
+}
+
 Game.prototype.newPiece = function() {
 	var idx = randomInt(this.letters.length);
 	var letter = this.letters[idx];
@@ -127,6 +195,7 @@ Piece.prototype.lock = function() {
 			}
 	if (this.y >= 0) {
 		game.newPiece();
+		game.checkFullRow();
 	}
 }
 
