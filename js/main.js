@@ -105,8 +105,8 @@ Piece.prototype.lock = function() {
 				if (0 <= y && y < game.height && 0 <= x && x < game.width)
 					game.grid[y][x] = this.color;
 			}
-
-	game.newPiece();
+	if (this.y >= 0)
+		game.newPiece();
 }
 
 Piece.prototype.collision = function(deltaY, deltaX, deltaRotation) {
